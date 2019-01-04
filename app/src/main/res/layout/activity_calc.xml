@@ -16,7 +16,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_alignParentRight="true"
-        android:text="54321"
+        android:hint="54321"
         android:textSize="72dp"
         android:gravity="right"
         android:textColor="#ffffff"
@@ -31,7 +31,7 @@
         android:layout_marginLeft="20dp"
         android:layout_above="@+id/inputNum"
         android:layout_alignParentRight="true"
-        android:text="1234512"
+        android:hint="1234512"
         android:textSize="32dp"
         android:gravity="right"
         android:textColor="#ffffff"/>

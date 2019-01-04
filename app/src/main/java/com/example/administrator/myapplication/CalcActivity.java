@@ -2,6 +2,7 @@ package com.example.administrator.myapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -39,6 +40,8 @@ public class CalcActivity extends AppCompatActivity {
     ArrayList<Integer> nums = new ArrayList<>();
     ArrayList<String> ops = new ArrayList<>();
 
+    Boolean calcResult = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,12 +76,19 @@ public class CalcActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!TV_input.equals(null)) {
-                    nums.add(Integer.parseInt(TV_input.getText().toString()));
+                    if(calcResult){
+                        TV_result.setText(TV_input.getText().toString());
+                        TV_input.setText("!");
+                    }else {
+
+                        nums.add(Integer.parseInt(TV_input.getText().toString()));
+                    }
                     ops.add("/");
                     String temp = "";
 
                     for(int i=0;i<ops.size();i++){
                         temp+=nums.get(i).toString();
+
                         temp+=ops.get(i).toString();
                     }
 
@@ -94,7 +104,13 @@ public class CalcActivity extends AppCompatActivity {
         button_Multiple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nums.add(Integer.parseInt( TV_input.getText().toString() ) );
+                if(calcResult){
+                    TV_result.setText(TV_input.getText().toString());
+                    TV_input.setText("!");
+                }else {
+
+                    nums.add(Integer.parseInt(TV_input.getText().toString()));
+                }
                 ops.add("x");
 
                 String temp = "";
@@ -114,7 +130,14 @@ public class CalcActivity extends AppCompatActivity {
         button_Minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nums.add(Integer.parseInt( TV_input.getText().toString() ) );
+
+                if(calcResult){
+                    TV_result.setText(TV_input.getText().toString());
+                    TV_input.setText("!");
+                }else {
+
+                    nums.add(Integer.parseInt(TV_input.getText().toString()));
+                }
                 ops.add("-");
                 String temp = "";
 
@@ -122,6 +145,7 @@ public class CalcActivity extends AppCompatActivity {
                     temp+=nums.get(i).toString();
                     temp+=ops.get(i).toString();
                 }
+
 
 
                 TV_result.setText(temp);
@@ -133,7 +157,14 @@ public class CalcActivity extends AppCompatActivity {
         button_Plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nums.add(Integer.parseInt( TV_input.getText().toString() ) );
+
+                if(calcResult){
+                    TV_result.setText(TV_input.getText().toString());
+                    TV_input.setText("!");
+                }else {
+
+                    nums.add(Integer.parseInt(TV_input.getText().toString()));
+                }
                 ops.add("+");
                 String temp = "";
 
@@ -157,7 +188,7 @@ public class CalcActivity extends AppCompatActivity {
                 ops.clear();
                 TV_input.setText("");
                 TV_result.setText("");
-
+                calcResult = false;
 
             }
         });
@@ -176,14 +207,19 @@ public class CalcActivity extends AppCompatActivity {
                 TV_result.setText(temp);
 
                 TV_input.setText(calculate().toString());
+
+                calcResult = true;
             }
         });
 
         button_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 TV_input.setText(TV_input.getText()+"0");
                 button_0.startAnimation(ani);
+
 
             }
         });
@@ -266,6 +302,9 @@ public class CalcActivity extends AppCompatActivity {
     }
 
     public Integer calculate(){
+
+        Log.d("로그","nums  : " + nums.toString());
+        Log.d("로그","ops  : " + ops.toString());
         Integer sum=nums.get(0);
 
         for(int i=0;i<ops.size();i++){
@@ -279,13 +318,15 @@ public class CalcActivity extends AppCompatActivity {
                 case "-":
                     sum -= nums.get(i+1);
                     break;
-                case "*":
+                case "x":
                     sum *= nums.get(i+1);
                     break;
 
             }
         }
-
+        nums.clear();
+        nums.add(sum);
+        ops.clear();
         return sum;
 
 
